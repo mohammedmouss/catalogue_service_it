@@ -1108,11 +1108,19 @@
   <script src="script.js"></script>
 
   <script>
-    function scrollToSection() {
+
+function scrollToSection() {
     if (window.location.hash) {
         const target = document.querySelector(window.location.hash);
         if (target) {
             target.scrollIntoView({ behavior: "smooth" });
+
+            // Petite astuce : Supprimer temporairement le hash pour forcer la détection au prochain clic
+            const cleanHash = window.location.hash;
+            history.replaceState(null, null, " "); // Supprime le hash dans l'URL sans recharger la page
+            setTimeout(() => {
+                history.replaceState(null, null, cleanHash); // Remet le hash après un court instant
+            }, 10);
         }
     }
 }
@@ -1120,8 +1128,16 @@
 // Exécuter au chargement de la page
 window.onload = scrollToSection;
 
-// Écouter les changements de hash (ex: cliquer sur un lien interne)
-window.addEventListener("hashchange", scrollToSection);
+// Écouter les clics sur les liens internes et forcer la mise à jour du hash
+document.addEventListener("click", function(event) {
+    if (event.target.tagName === "A" && event.target.getAttribute("href").startsWith("#")) {
+        event.preventDefault();
+        const targetID = event.target.getAttribute("href");
+        history.pushState(null, null, targetID); // Change le hash dans l'URL
+        scrollToSection(); // Exécute le scroll immédiatement
+    }
+});
+
 
   </script>
  
