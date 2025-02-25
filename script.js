@@ -1,25 +1,23 @@
-"use strict";
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionnez tous les liens internes
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
 
-function scrollToSection() {
-    const target = document.querySelector(window.location.hash);
-    if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
-    }
-}
+    internalLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            // Empêcher le comportement par défaut du lien
+            event.preventDefault();
 
-// Exécuter au chargement de la page
-window.onload = scrollToSection;
+            // Récupérer l'ID de l'ancre cible
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
 
-// Écouter les clics sur les liens internes
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", function(event) {
-        event.preventDefault(); // Empêche le comportement par défaut du lien
-        const targetID = this.getAttribute("href");
-        
-        // Change manuellement le hash pour forcer un rafraîchissement
-        window.location.hash = targetID;
+            if (targetElement) {
+                // Faire défiler la page vers l'élément cible
+                targetElement.scrollIntoView({ behavior: 'smooth' });
 
-        // Appelle la fonction pour défiler vers la section
-        scrollToSection();
+                // Mettre à jour l'URL avec le hash (optionnel)
+                window.history.pushState(null, null, '#' + targetId);
+            }
+        });
     });
 });
