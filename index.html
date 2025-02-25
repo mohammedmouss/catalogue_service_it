@@ -1107,16 +1107,24 @@
   <!-- JS -->
   <script src="script.js"></script>
 
-  <!-- <script>window.onload = function() {
-    // Vérifie si un hash (#section) est présent dans l'URL de l'iframe
+  <script>
+    function scrollToSection() {
     if (window.location.hash) {
         const target = document.querySelector(window.location.hash);
         if (target) {
-            target.scrollIntoView({ behavior: "smooth" }); // Fait défiler vers la section ciblée
+            target.scrollIntoView({ behavior: "smooth" });
         }
     }
-};</script>
- -->
+}
+
+// Exécuter au chargement de la page
+window.onload = scrollToSection;
+
+// Écouter les changements de hash (ex: cliquer sur un lien interne)
+window.addEventListener("hashchange", scrollToSection);
+
+  </script>
+ 
 
 
 </body>
