@@ -21,6 +21,13 @@
 
 <body>
 
+  <script>
+     // Vérifie si la page est chargée dans un iframe
+     if (window.top === window.self) {
+            // Si la page n'est pas chargée dans un iframe, redirige vers une autre page
+            window.location.href = 'error.html';
+        }
+  </script>
   <div class="bg-gray-50 py-24 sm:py-32">
     <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
       <h2 class="text-center text-base/7 font-semibold text-indigo-600">Département informatique</h2>
@@ -1027,6 +1034,8 @@
 
 
   <script>
+     
+
     document.addEventListener('DOMContentLoaded', function () {
       const sections = document.querySelectorAll('section[aria-label="Catalogue de services IT"]');
 
